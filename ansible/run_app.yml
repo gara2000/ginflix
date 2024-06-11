@@ -12,21 +12,21 @@
     
     - name: Create the K8s cluster
       shell: |
-        cd ~/vod-service
+        cd ~/ginflix
         make cluster-create
 
     - name: Stop the application if it was previously running
       shell: |
-        cd ~/vod-service
+        cd ~/ginflix
         make stop
       ignore_errors: true
 
     - name: Start the application
       shell: |
-        cd ~/vod-service
+        cd ~/ginflix
         make start
 
     - name: Copy the video inside the streamer
       shell: |
-        cd ~/vod-service
+        cd ~/ginflix
         make copy
