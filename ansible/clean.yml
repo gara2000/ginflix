@@ -1,0 +1,10 @@
+---
+- name: Clean the server
+  hosts: telecom
+  gather_facts: false
+
+  tasks:
+    - name: Remove the application folder
+      file:
+        path: ~/vod-service
+        state: absent

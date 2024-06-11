@@ -1,0 +1,32 @@
+---
+- name: Run the Ginflix application on the Telecom remote server
+  hosts: telecom
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Get the GitHub repository
+      shell: |
+        cd ~
+        git clone https://github.com/gara2000/vod-service.git
+    
+    - name: Create the K8s cluster
+      shell: |
+        cd ~/vod-service
+        make cluster-create
+
+    - name: Stop the application if it was previously running
+      shell: |
+        cd ~/vod-service
+        make stop
+      ignore_errors: true
+
+    - name: Start the application
+      shell: |
+        cd ~/vod-service
+        make start
+
+    - name: Copy the video inside the streamer
+      shell: |
+        cd ~/vod-service
+        make copy
