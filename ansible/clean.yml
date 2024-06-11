@@ -6,5 +6,5 @@
   tasks:
     - name: Remove the application folder
       file:
-        path: ~/vod-service
+        path: ~/ginflix
         state: absent

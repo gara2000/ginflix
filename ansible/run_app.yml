@@ -8,7 +8,7 @@
     - name: Get the GitHub repository
       shell: |
         cd ~
-        git clone https://github.com/gara2000/vod-service.git
+        git clone https://github.com/gara2000/ginflix.git
     
     - name: Create the K8s cluster
       shell: |

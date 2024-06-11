@@ -14,7 +14,7 @@ database:
 	kubectl apply -f volumes/database.yml
 	kubectl apply -f deployments/database.yml
 	kubectl apply -f services/database.yml
-clean-database:
+_database:
 	- kubectl delete -f deployments/database.yml
 	- kubectl delete -f volumes/database.yml
 	- kubectl delete -f services/database.yml
@@ -23,7 +23,7 @@ streamer:
 	kubectl apply -f volumes/streamer.yml
 	kubectl apply -f deployments/streamer.yml
 	kubectl apply -f services/streamer.yml
-clean-streamer:
+_streamer:
 	- kubectl delete -f deployments/streamer.yml
 	- kubectl delete -f volumes/streamer.yml
 	- kubectl delete -f services/streamer.yml
@@ -31,24 +31,24 @@ clean-streamer:
 web:
 	kubectl apply -f deployments/web.yml
 	kubectl apply -f services/web.yml
-clean-web:
+_web:
 	- kubectl delete -f deployments/web.yml
 	- kubectl delete -f services/web.yml
 
 caddy:
 	{ \
 		cd reverse-proxy ; \
-		docker compose up -d ; \
+		docker-compose up -d ; \
 	}
 down-caddy:
 	{\
 		cd reverse-proxy ; \
-		docker compose down ; \
+		docker-compose down ; \
 	}
-clean-caddy:
+_caddy:
 	{\
 		cd reverse-proxy ; \
-		docker compose down --rmi all ; \
+		docker-compose down --rmi all ; \
 	}
 
 STREAMER:=$(shell kubectl get pods -l run=streamer | awk -F' ' 'NR==2 {print $$1}')
@@ -58,3 +58,14 @@ copy:
 
 start: database streamer web caddy
 stop: clean-database clean-streamer clean-web clean-caddy
+
++ansible:
+	{\
+		cd ansible ; \
+		ansible-playbook run_app.yml ; \
+	}
+_ansible:
+	{\
+		cd ansible ; \
+		ansible-playbook clean.yml ; \
+	}
