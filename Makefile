@@ -1,5 +1,4 @@
 CLUSTER_NAME=ginflix
-PORT=3000
 VID_NAME=stock_analysis.mp4
 
 cluster-create:
@@ -57,7 +56,7 @@ copy:
 	kubectl exec -ti $(STREAMER) -- ls /var/www/html/
 
 start: database streamer web caddy
-stop: clean-database clean-streamer clean-web clean-caddy
+stop: _database _streamer _web _caddy
 
 +ansible:
 	{\
